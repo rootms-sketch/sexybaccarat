@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>SexyBaccarat – My Stats</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700;800;900&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#08000f;--bg1:#0f0018;--bg2:#150022;--bg3:#1e0030;
+  --pk:#e91e8c;--pk2:#ff4db8;--pk3:#ffaadd;
+  --pu:#6d28d9;--pu2:#a855f7;--pu3:#d8b4fe;
+  --green:#34d399;--red:#f87171;--teal:#2dd4bf;
+  --text:#f5eeff;--muted:#5a3868;--muted2:#9878b0;--border:#ffffff0d;
+  --rc:#e91e8c;
+}
+html,body{min-height:100vh;background:var(--bg);font-family:'Kanit','Noto Sans Thai',sans-serif;color:var(--text);overflow-x:hidden}
+::-webkit-scrollbar{width:2px}
+::-webkit-scrollbar-thumb{background:#e91e8c44;border-radius:2px}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.5}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes shimmer{0%{background-position:200% center}100%{background-position:-200% center}}
+@keyframes pop{0%{transform:scale(.5);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+@keyframes orbA{0%,100%{transform:translate(0,0)}50%{transform:translate(25px,-18px)}}
+@keyframes orbB{0%,100%{transform:translate(0,0)}50%{transform:translate(-18px,22px)}}
+@keyframes glow{0%,100%{box-shadow:0 0 16px var(--rc)33}50%{box-shadow:0 0 32px var(--rc)55}}
+@keyframes btnShine{0%{transform:skewX(-20deg) translateX(-200%)}60%,100%{transform:skewX(-20deg) translateX(400%)}}
+
+.fu{animation:fadeUp .45s cubic-bezier(.22,1,.36,1) both}
+.fi{animation:fadeIn .4s ease both}
+.float{animation:float 3s ease-in-out infinite}
+.pop{animation:pop .5s cubic-bezier(.34,1.56,.64,1) both}
+.shimmer-gold{background:linear-gradient(90deg,var(--pk),var(--pk2),var(--pk3),var(--pu2),var(--pk));background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 3s linear infinite}
+
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:18px;position:relative;overflow:hidden;transition:border-color .25s,transform .2s}
+.card:hover{border-color:#ffffff15;transform:translateY(-1px)}
+.card-rc{border-color:color-mix(in srgb,var(--rc) 20%,transparent)}
+.lbl{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.pbar{height:5px;background:#ffffff09;border-radius:10px;overflow:hidden}
+.pfill{height:100%;border-radius:10px;transition:width 1.5s cubic-bezier(.4,0,.2,1)}
+.srow{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border)}
+.srow:last-child{border-bottom:none}
+.type-pill{font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 7px;border-radius:20px;text-transform:uppercase;flex-shrink:0}
+
+#root{max-width:430px;margin:0 auto;min-height:100vh;position:relative;z-index:1}
+#login-scr{display:flex;min-height:100vh;align-items:center;justify-content:center;padding:24px}
+#dash-scr{display:none;padding-bottom:88px}
+.page{display:none;flex-direction:column;gap:13px;padding:14px 14px 0}
+.page.on{display:flex}
+
+.ni{width:100%;background:#0d0018;border:1px solid #ffffff0f;border-radius:14px;padding:13px 17px;font-family:inherit;font-size:15px;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s}
+.ni:focus{border-color:var(--pk)55;box-shadow:0 0 0 3px var(--pk)10}
+.ni::placeholder{color:#2e1040}
+.lbtn{width:100%;padding:15px;border:none;border-radius:14px;cursor:pointer;font-family:inherit;font-size:15px;font-weight:800;background:linear-gradient(135deg,#7c3aed,#a855f7,#e91e8c,#ff4db8);color:#fff;box-shadow:0 8px 30px var(--pk)44;transition:transform .15s,box-shadow .15s,opacity .15s}
+.lbtn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 12px 40px var(--pk)55}
+.lbtn:disabled{opacity:.45;cursor:not-allowed}
+.chip{background:#ffffff05;border:1px solid #ffffff0e;border-radius:20px;padding:5px 11px;font-size:11px;color:var(--muted2);cursor:pointer;font-family:inherit;font-weight:600;transition:all .15s}
+.chip:hover{background:var(--rc)14;border-color:var(--rc)30;color:var(--rc)}
+
+.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:#07071aee;backdrop-filter:blur(24px);border-top:1px solid #ffffff08;display:flex;padding:6px 0 16px;z-index:100;box-shadow:0 -6px 30px #00000066}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;cursor:pointer;font-family:inherit}
+.nbi{width:36px;height:28px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;border:1px solid transparent;transition:all .2s}
+.nb.on .nbi{background:var(--rc)14;border-color:var(--rc)30}
+.nbl{font-size:10px;font-weight:600;color:var(--muted);transition:color .15s;font-family:'Sarabun',sans-serif}
+.nb.on .nbl{color:var(--rc)}
+
+.orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0}
+</style>
+</head>
+<body>
+
+<div class="orb" style="width:500px;height:500px;top:-15%;right:-20%;background:radial-gradient(circle,#e91e8c12,transparent 65%);animation:orbA 11s ease-in-out infinite"></div>
+<div class="orb" style="width:380px;height:380px;bottom:-10%;left:-15%;background:radial-gradient(circle,#7c3aed10,transparent 65%);animation:orbB 14s ease-in-out infinite"></div>
+
+<div id="root">
+
+<!-- ── LOGIN ─────────────────────────────────────── -->
+<div id="login-scr">
+<div style="width:100%;max-width:360px" class="fu">
+  <div style="text-align:center;margin-bottom:30px">
+    <div class="float" style="font-size:52px;margin-bottom:8px;filter:drop-shadow(0 0 24px var(--pk)66)">👸</div>
+    <div style="font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--pu2);margin-bottom:4px;font-family:'Sarabun',sans-serif">Welcome to</div>
+    <div style="font-size:26px;font-weight:900;letter-spacing:1px;background:linear-gradient(135deg,#a855f7,#e91e8c,#ff4db8);-webkit-background-clip:text;-webkit-text-fill-color:transparent">SEXYBACCARAT</div>
+    <div style="font-size:13px;color:var(--muted2);margin-top:5px;font-family:'Sarabun',sans-serif">ดูสถิติและ insight ส่วนตัวของคุณ</div>
+  </div>
+
+  <div id="lcard" style="background:linear-gradient(160deg,#10001a,#1a0028);border:1px solid var(--pk)22;border-radius:26px;padding:26px;box-shadow:0 40px 80px #00000099,0 0 60px var(--pu)08;position:relative;overflow:hidden">
+    <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--pk)55,var(--pu2)55,transparent)"></div>
+    <div style="position:absolute;bottom:-80px;right:-80px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,var(--pk)08,transparent 65%);pointer-events:none"></div>
+    <label style="display:block;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:9px">Display Name</label>
+    <input id="ni" class="ni" placeholder="กรอกชื่อของคุณ…" autocomplete="off"/>
+    <div id="lerr" style="display:none;font-size:12px;color:var(--red);margin-top:7px;align-items:center;gap:5px">⚠ ไม่พบชื่อในระบบ</div>
+    <button id="lbtn" class="lbtn" style="margin-top:18px">ดูสถิติของฉัน →</button>
+  </div>
+</div>
+</div>
+
+<!-- ── DASHBOARD ──────────────────────────────────── -->
+<div id="dash-scr">
+
+  <!-- Hero -->
+  <div id="hero" style="padding:22px 14px 18px;position:relative;overflow:hidden;background:linear-gradient(160deg,#0f0018 0%,#1a0028 60%,#08000f 100%)">
+    <div id="hero-orb" style="position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;pointer-events:none"></div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="position:relative;flex-shrink:0">
+          <div id="av" style="width:50px;height:50px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;color:#05050f;animation:glow 3s ease-in-out infinite"></div>
+          <div style="position:absolute;bottom:-1px;right:-1px;width:12px;height:12px;border-radius:50%;background:#34d399;border:2px solid var(--bg)"></div>
+        </div>
+        <div>
+          <div id="hsub" style="font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:1px;font-family:'Sarabun',sans-serif"></div>
+          <div id="hname" style="font-size:21px;font-weight:900;line-height:1.1"></div>
+        </div>
+      </div>
+      <button id="out-btn" style="background:none;border:1px solid var(--border);border-radius:9px;padding:5px 11px;color:var(--muted);font-family:inherit;font-size:11px;cursor:pointer;transition:all .15s" onmouseover="this.style.color='var(--red)';this.style.borderColor='#f8717144'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">ออก</button>
+    </div>
+    <div id="rcard" style="background:var(--bg1);border-radius:14px;padding:13px 15px;border:1px solid var(--border)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px">
+        <div style="display:flex;align-items:center;gap:7px">
+          <span id="rico" style="font-size:15px"></span>
+          <span id="rname" style="font-weight:800;font-size:14px"></span>
+        </div>
+        <span id="rnext" style="font-size:11px;color:var(--muted)"></span>
+      </div>
+      <div class="pbar"><div id="rbar" class="pfill"></div></div>
+      <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:11px">
+        <span id="pbadge" style="font-weight:700"></span>
+        <span id="rlvl" style="color:var(--muted)"></span>
+      </div>
+    </div>
+
+    <!-- ปุ่มเข้าเล่นเกม -->
+    <a href="https://play2-sb.sexybaccarat.cloud/" target="_blank"
+       style="display:flex;align-items:center;justify-content:center;gap:10px;
+              margin-top:14px;padding:14px;border-radius:14px;
+              background:linear-gradient(135deg,#6d28d9,#a855f7,#e91e8c,#ff4db8);
+              color:#fff;font-family:inherit;font-size:15px;font-weight:800;
+              text-decoration:none;letter-spacing:.5px;
+              box-shadow:0 6px 28px var(--pk)44;
+              transition:transform .15s,box-shadow .15s;position:relative;overflow:hidden"
+       onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 36px var(--pk)66'"
+       onmouseout="this.style.transform='none';this.style.boxShadow='0 6px 28px var(--pk)44'">
+      <div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent 0%,#ffffff18 50%,transparent 100%);transform:skewX(-20deg) translateX(-200%);animation:btnShine 3s ease-in-out infinite"></div>
+      <span style="font-size:20px">🎰</span>
+      <span>เข้าเล่นเกม</span>
+      <span style="font-size:14px;opacity:.8">→</span>
+    </a>
+  </div>
+
+  <div style="display:flex;gap:5px;padding:0 14px 10px;overflow-x:auto;scrollbar-width:none">
+    <button class="nb on" data-t="home"  style="flex:none;background:var(--bg2);border:1px solid var(--border);border-radius:30px;padding:7px 15px;transition:all .2s"><span class="nbl" style="font-size:12px">🏠 หน้าแรก</span></button>
+    <button class="nb"    data-t="games" style="flex:none;background:var(--bg2);border:1px solid var(--border);border-radius:30px;padding:7px 15px;transition:all .2s"><span class="nbl" style="font-size:12px">🎮 เกม</span></button>
+    <button class="nb"    data-t="tip"   style="flex:none;background:var(--bg2);border:1px solid var(--border);border-radius:30px;padding:7px 15px;transition:all .2s"><span class="nbl" style="font-size:12px">💡 เคล็ดลับ</span></button>
+  </div>
+
+  <div id="page-home"  class="page on"></div>
+  <div id="page-games" class="page"></div>
+  <div id="page-tip"   class="page"></div>
+
+</div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   ⚙️  APPS SCRIPT CONFIG
+   ── วาง Web App URL หลัง Deploy แล้ว ────────────────
+══════════════════════════════════════════════════════ */
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwBXm8RpUq7olUDXUyxidnete-WyVtFMNV6_RBN9AyWHUpnRbAoX9vkHl7QLl1RFD4R/exec";
+
+/* ── Fetch player via Apps Script proxy ────────────── */
+async function fetchPlayerFromBQ(displayName) {
+  const url = `${APPS_SCRIPT_URL}?action=lookup&display_name=${encodeURIComponent(displayName)}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Server error: ${res.status}`);
+  const json = await res.json();
+  if (json.error) throw new Error(json.error);
+  if (!json.found) return null;
+  // Apps Script คืนค่ามาในรูปแบบที่ dashboard ใช้ได้โดยตรง
+  return json;
+}
+
+/* ── Static fallback (sample data สำหรับ dev/test) ── */
+const DB_SAMPLE = {
+  "kung385":    {m:{dn:"kung385",   un:"0811775385",rl:12},s:{wr:45.69,tb:6980, ab:23173.8, sk:11,ts:28, sm:0.9},g:[{n:"AE SEXY",p:"AE Sexy",t:"LIVE"},{n:"SA Gaming",p:"SA Gaming",t:"LIVE"},{n:null}],b:{gh:2, rs:">40 นาที",ad:11}},
+  "Ak1990":     {m:{dn:"Ak1990",    un:"0851633232",rl:11},s:{wr:18.21,tb:60794,ab:1875.15, sk:14,ts:58, sm:0.1},g:[{n:"Fortune King Jackpot",p:"JILI",t:"OTHER"},{n:"Boom Legend",p:"JILI",t:"OTHER"},{n:"AE SEXY",p:"AE Sexy",t:"LIVE"}],b:{gh:4, rs:">40 นาที",ad:29}},
+  "am19072525": {m:{dn:"am19072525",un:"0801099336",rl:11},s:{wr:30.01,tb:11804,ab:9421.48, sk:22,ts:176,sm:0.4},g:[{n:"AE SEXY",p:"AE Sexy",t:"LIVE"},{n:"Ways of the Qilin",p:"PG Soft",t:"SLOT"},{n:"lucky neko",p:"PG Soft",t:"SLOT"}],b:{gh:22,rs:"<10 นาที",ad:31}},
+  "KimYuSin":   {m:{dn:"KimYuSin",  un:"0877383846",rl:18},s:{wr:43.17,tb:514,  ab:160318.4,sk:8, ts:42, sm:1.7},g:[{n:"AE SEXY",p:"AE Sexy",t:"LIVE"},{n:"SA Gaming",p:"SA Gaming",t:"LIVE"},{n:"Baccarat Deluxe",p:"PG Soft",t:"SLOT"}],b:{gh:12,rs:"<10 นาที",ad:14}},
+  "MomoZaa":    {m:{dn:"MomoZaa",   un:"0814619651",rl:11},s:{wr:37.43,tb:26941,ab:2053.01, sk:22,ts:103,sm:0.5},g:[{n:"AE SEXY",p:"AE Sexy",t:"LIVE"},{n:"SA Gaming",p:"SA Gaming",t:"LIVE"},{n:null}],b:{gh:1, rs:">40 นาที",ad:29}},
+  "marty123":   {m:{dn:"marty123",  un:"0898896889",rl:12},s:{wr:45.46,tb:4389, ab:7801.81, sk:12,ts:65, sm:0.9},g:[{n:"AE SEXY",p:"AE Sexy",t:"LIVE"},{n:"SA Gaming",p:"SA Gaming",t:"LIVE"},{n:"Secrets of Cleopatra",p:"PG Soft",t:"SLOT"}],b:{gh:19,rs:">40 นาที",ad:20}},
+  "GaoJing":    {m:{dn:"GaoJing",   un:"0954782666",rl:9}, s:{wr:46.3, tb:8445, ab:4016.63, sk:9, ts:100,sm:0.9},g:[{n:"SA Gaming",p:"SA Gaming",t:"LIVE"},{n:null},{n:null}],b:{gh:19,rs:"<10 นาที",ad:24}},
+};
+
+// ตั้งค่า USE_BQ_API = true เมื่อพร้อม connect BigQuery จริง
+const USE_BQ_API = true;
+
+/* ── HELPERS ──────────────────────────────────────── */
+const fmt  = n => Math.round(n).toLocaleString("th-TH");
+const $    = id => document.getElementById(id);
+
+const RN = ["","Bronze","Silver","Gold","Platinum","Diamond","Sapphire","Ruby","Emerald","Onyx","Crystal","Pearl","VIP","VIP+","VIP++","Elite","Elite+","Elite++","Legend","Legend+","Legend Max","Legend II","Legend III","Legend IV","Legend V","Legend MAX"];
+const RC = ["","#cd7f32","#aaaacc","#c9a84c","#7ec8e3","#a78bfa","#60a5fa","#f87171","#34d399","#e2e8f0","#93c5fd","#f0abfc","#f0c060","#ffd700","#fff44f","#ff9f1c","#ff6b6b","#ff4757","#00f5d4","#ffe66d","#ffffff","#e879f9","#c084fc","#f472b6","#fb7185","#ff4db8"];
+const rn   = l => RN[l] || `Lv.${l}`;
+const rc   = l => RC[l] || "#d4a843";
+const badge= d => d>=28?{l:"🔥 Elite Player",c:"#f0c060"}:d>=20?{l:"⚡ Dedicated",c:"#34d399"}:d>=12?{l:"👾 Regular",c:"#7ec8e3"}:{l:"🌱 Casual",c:"#aaaacc"};
+const skMsg= s => s>=20?"🏆 สถิติสุดยอด!":s>=12?"🔥 ร้อนแรงมาก!":s>=8?"⚡ ฟอร์มดี!":"💪 สู้ต่อไป!";
+const tcol = t => t==="LIVE"?"#34d399":t==="SLOT"?"#a78bfa":t==="OTHER"?"#f0c060":"#7070a0";
+
+function motive(d){
+  const {wr,tb,ts,sk}=d.s, {gh,ad}=d.b;
+  if(sk>=20)  return{e:"🏆",t:"สถิติสุดยอด!",     m:`Win Streak ${sk} ครั้งติด LIVE — ยอดเยี่ยมมาก!`};
+  if(ad>=28)  return{e:"🔥",t:"ขยันที่สุด!",       m:`Active ${ad}/30 วัน คุณอยู่ในระดับ Elite!`};
+  if(wr>=44)  return{e:"⚡",t:"ฟอร์มร้อนแรง!",    m:`Win Rate ${wr}% ช่วงนี้กำลังมาแรง!`};
+  if(ts>=100) return{e:"💎",t:"ประสบการณ์สูงมาก!",m:`${fmt(ts)} sessions นักเดิมพันมืออาชีพ!`};
+  return{e:"⭐",t:"เวลาทองของคุณ!",m:`ช่วง ${gh}:00 น. คือจังหวะที่ดีที่สุดของคุณ`};
+}
+
+function ring(val,size,stroke,col){
+  const r=(size-stroke)/2,c=2*Math.PI*r;
+  return `<svg width="${size}" height="${size}" style="transform:rotate(-90deg)">
+    <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="#ffffff07" stroke-width="${stroke}"/>
+    <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${col}" stroke-width="${stroke}"
+      stroke-dasharray="${c}" stroke-dashoffset="${c-(val/100)*c}" stroke-linecap="round"
+      style="filter:drop-shadow(0 0 5px ${col}88);transition:stroke-dashoffset 1.6s cubic-bezier(.4,0,.2,1)"/>
+  </svg>`;
+}
+
+/* ── LOGIN ────────────────────────────────────────── */
+$("ni").addEventListener("keydown", e => { if(e.key === "Enter") doLogin(); });
+$("lbtn").onclick = doLogin;
+
+async function doLogin() {
+  const val = $("ni").value.trim();
+  if (!val) return;
+
+  $("lerr").style.display = "none";
+  $("lbtn").disabled = true;
+  $("lbtn").innerHTML = `<span style="display:flex;align-items:center;justify-content:center;gap:9px"><span style="width:14px;height:14px;border:2px solid #ffffff44;border-top:2px solid #fff;border-radius:50%;display:inline-block;animation:spin .7s linear infinite"></span>กำลังโหลด...</span>`;
+
+  try {
+    let data = null;
+
+    if (USE_BQ_API) {
+      // ── Mode จริง: ดึงจาก BigQuery ──────────────────
+      data = await fetchPlayerFromBQ(val);
+    } else {
+      // ── Mode ทดสอบ: ใช้ sample data ─────────────────
+      await new Promise(r => setTimeout(r, 750)); // จำลอง delay
+      const key = Object.keys(DB_SAMPLE).find(k => k.toLowerCase() === val.toLowerCase());
+      data = key ? DB_SAMPLE[key] : null;
+    }
+
+    if (!data) {
+      $("lerr").style.display = "flex";
+      $("lcard").classList.add("shake");
+      setTimeout(() => $("lcard").classList.remove("shake"), 500);
+      $("lbtn").disabled = false;
+      $("lbtn").textContent = "ดูสถิติของฉัน →";
+      return;
+    }
+
+    showDash(data);
+
+  } catch(err) {
+    $("lerr").textContent = `⚠ ${err.message || "เกิดข้อผิดพลาด กรุณาลองใหม่"}`;
+    $("lerr").style.display = "flex";
+    $("lbtn").disabled = false;
+    $("lbtn").textContent = "ดูสถิติของฉัน →";
+  }
+}
+
+/* ── DASHBOARD ────────────────────────────────────── */
+function showDash(d){
+  $("login-scr").style.display="none";
+  $("dash-scr").style.display="block";
+
+  const col=rc(d.m.rl), rname=rn(d.m.rl), rnext=rn(d.m.rl+1), bg=badge(d.b.ad), mv=motive(d);
+  document.documentElement.style.setProperty("--rc",col);
+
+  $("hero-orb").style.background=`radial-gradient(circle,${col}14,transparent 65%)`;
+  const av=$("av");
+  av.style.background=`linear-gradient(135deg,${col},${col}aa)`;
+  av.style.setProperty("--rc",col);
+  av.style.boxShadow=`0 0 0 3px var(--bg),0 0 0 5px ${col}44,0 0 20px ${col}33`;
+  av.textContent=d.m.dn[0].toUpperCase();
+
+  $("hsub").textContent="ยินดีต้อนรับกลับมา"; $("hsub").style.color=col+"cc";
+  $("hname").textContent=d.m.dn;
+  $("rcard").style.borderColor=col+"1a";
+  $("rico").textContent=d.m.rl>=15?"🌟":d.m.rl>=10?"👑":d.m.rl>=6?"💎":"⭐";
+  $("rname").textContent=rname; $("rname").style.color=col;
+  $("rnext").textContent=`→ ${rnext}`;
+  $("rbar").style.cssText=`width:${Math.min((d.m.rl/25)*100,100)}%;background:linear-gradient(90deg,${col}77,${col});box-shadow:0 0 7px ${col}55`;
+  $("pbadge").textContent=bg.l; $("pbadge").style.color=bg.c;
+  $("rlvl").textContent=`Level ${d.m.rl} / 25`;
+
+  buildHome(d,col,bg,mv);
+  buildGames(d,col);
+  buildTip(d,col,bg);
+
+  document.querySelectorAll(".nb[data-t]").forEach(btn=>{
+    btn.onclick=()=>{
+      document.querySelectorAll(".nb[data-t]").forEach(b=>{
+        b.classList.remove("on");
+        b.style.borderColor="var(--border)";
+      });
+      btn.classList.add("on");
+      btn.style.borderColor=col+"33";
+      const t=btn.dataset.t;
+      document.querySelectorAll(".page").forEach(p=>p.classList.remove("on"));
+      $("page-"+t).classList.add("on");
+    };
+  });
+
+  $("out-btn").onclick=()=>{
+    $("dash-scr").style.display="none";
+    $("login-scr").style.display="flex";
+    $("lbtn").disabled=false; $("lbtn").textContent="ดูสถิติของฉัน →";
+    $("ni").value="";
+    document.documentElement.style.removeProperty("--rc");
+    document.querySelectorAll(".nb[data-t]").forEach((b,i)=>{
+      b.classList.toggle("on",i===0);
+      b.style.borderColor="var(--border)";
+    });
+    document.querySelectorAll(".page").forEach((p,i)=>p.classList.toggle("on",i===0));
+  };
+}
+
+/* ── PAGE: HOME ───────────────────────────────────── */
+function buildHome(d,col,bg,mv){
+  const p=$("page-home"); p.innerHTML="";
+  const wr=d.s.wr, wc=wr>=44?"#34d399":wr>=30?"#f0c060":"#aaaacc";
+
+  p.innerHTML=`
+  <div class="card fu" style="background:linear-gradient(135deg,var(--bg2),var(--bg3));border-color:${col}1e;animation-delay:0ms">
+    <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,${col}44,transparent)"></div>
+    <div style="display:flex;gap:14px;align-items:center">
+      <div class="float" style="font-size:42px;filter:drop-shadow(0 0 14px ${col}66);flex-shrink:0">${mv.e}</div>
+      <div>
+        <div class="shimmer-gold" style="font-size:18px;font-weight:900;margin-bottom:3px">${mv.t}</div>
+        <div style="font-size:13px;color:var(--muted2);line-height:1.6;font-family:'Sarabun',sans-serif">${mv.m}</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px">
+    <div class="card fu" style="text-align:center;padding:18px 10px;animation-delay:45ms">
+      <div style="position:relative;width:78px;height:78px;margin:0 auto 9px">
+        ${ring(wr,78,7,"#34d399")}
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+          <span style="font-size:14px;font-weight:900;color:#34d399;line-height:1">${wr}%</span>
+          <span style="font-size:8px;color:var(--muted);letter-spacing:1px;margin-top:1px">WIN</span>
+        </div>
+      </div>
+      <div class="lbl">WIN RATE</div>
+      <div style="font-size:12px;font-weight:700;color:${wc};margin-top:2px">${wr>=44?"🔥 ร้อนแรง!":wr>=30?"👍 ดีมาก":"💪 สู้ต่อ"}</div>
+    </div>
+
+    <div class="card fu" style="text-align:center;padding:18px 10px;animation-delay:75ms">
+      <div class="pop" style="font-size:66px;font-weight:900;line-height:1;color:var(--pk2);filter:drop-shadow(0 0 18px var(--pk)66);animation-delay:250ms">${d.s.sk}</div>
+      <div style="font-size:18px;margin-top:-4px">🔥</div>
+      <div class="lbl" style="margin-top:5px">WIN STREAK<br><span style="color:var(--teal);font-size:8px">LIVE ONLY</span></div>
+      <div style="font-size:12px;font-weight:700;color:var(--pk2);margin-top:2px">${skMsg(d.s.sk)}</div>
+    </div>
+  </div>
+
+  <div class="card fu" style="animation-delay:100ms">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div>
+        <div class="lbl" style="margin:0">Active Days (30 วัน)</div>
+        <div style="font-size:21px;font-weight:900;color:${bg.c};margin-top:2px">${d.b.ad} <span style="font-size:12px;color:var(--muted);font-weight:400">/ 30 วัน</span></div>
+      </div>
+      <div style="background:${bg.c}18;border:1px solid ${bg.c}33;border-radius:20px;padding:5px 12px;font-size:11px;font-weight:700;color:${bg.c}">${bg.l}</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(10,1fr);gap:3px">
+      ${Array.from({length:30},(_,i)=>`<div style="aspect-ratio:1;border-radius:3px;background:${i<d.b.ad?bg.c:"#ffffff07"};opacity:${i<d.b.ad?Math.min(.4+(i/d.b.ad)*.6,1):1};box-shadow:${i<d.b.ad?`0 0 3px ${bg.c}44`:"none"}"></div>`).join("")}
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:9px">
+    ${[
+      {i:"🎮",v:d.s.ts,       l:"Sessions"},
+      {i:"🎲",v:fmt(d.s.tb),  l:"Total Bets"},
+      {i:"💰",v:"฿"+fmt(d.s.ab),l:"Avg Bet"},
+    ].map((s,i)=>`
+    <div class="card fu" style="padding:13px 8px;text-align:center;animation-delay:${125+i*30}ms">
+      <div style="font-size:20px;margin-bottom:4px">${s.i}</div>
+      <div style="font-size:13px;font-weight:800;line-height:1">${s.v}</div>
+      <div class="lbl" style="margin-top:5px;font-size:9px">${s.l}</div>
+    </div>`).join("")}
+  </div>`;
+}
+
+/* ── PAGE: GAMES ──────────────────────────────────── */
+function buildGames(d,col){
+  const p=$("page-games"); p.innerHTML="";
+  const gs=d.g.filter(g=>g.n);
+  const rm=[{l:"#1",bg:col,tc:"#05050f"},{l:"#2",bg:"#ffffff18",tc:"var(--muted2)"},{l:"#3",bg:"#ffffff0c",tc:"var(--muted)"}];
+
+  p.innerHTML=`
+  <div class="card fu" style="border-color:${col}1e;animation-delay:0ms">
+    <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,${col}44,transparent)"></div>
+    <div class="lbl" style="margin-bottom:12px">เกมที่เล่นบ่อยที่สุด 🎮</div>
+    ${gs.length===0?`<div style="color:var(--muted);font-size:13px">ยังไม่มีข้อมูล</div>`:
+    gs.map((g,i)=>`
+    <div style="display:flex;align-items:center;gap:11px;padding:11px 0;${i<gs.length-1?"border-bottom:1px solid var(--border)":""}">
+      <div style="width:26px;height:26px;border-radius:8px;background:${rm[i].bg};color:${rm[i].tc};font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">${rm[i].l}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${g.n}</div>
+        <div style="font-size:11px;color:var(--muted2);margin-top:1px;font-family:'Sarabun',sans-serif">${g.p}</div>
+      </div>
+      <span class="type-pill" style="background:${tcol(g.t)}18;color:${tcol(g.t)};border:1px solid ${tcol(g.t)}33">${g.t}</span>
+    </div>`).join("")}
+  </div>
+
+  <div class="card fu" style="animation-delay:55ms;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center">
+    <div style="position:relative;width:78px;height:78px;flex-shrink:0">
+      ${ring(d.s.wr,78,7,"#34d399")}
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+        <span style="font-size:14px;font-weight:900;color:#34d399;line-height:1">${d.s.wr}%</span>
+        <span style="font-size:8px;color:var(--muted);letter-spacing:1px;margin-top:1px">WIN</span>
+      </div>
+    </div>
+    <div>
+      ${[
+        {l:"Win Streak (LIVE)",v:`${d.s.sk} 🔥`,c:"var(--pk2)"},
+        {l:"Sessions",         v:d.s.ts},
+        {l:"Avg Session",      v:`${d.s.sm} นาที`},
+        {l:"Avg Bet",          v:`฿${fmt(d.s.ab)}`},
+      ].map(r=>`
+      <div class="srow">
+        <span style="font-size:12px;color:var(--muted2);font-family:'Sarabun',sans-serif">${r.l}</span>
+        <span style="font-size:13px;font-weight:700;color:${r.c||"var(--text)"};">${r.v}</span>
+      </div>`).join("")}
+    </div>
+  </div>
+
+  <div class="card fu" style="animation-delay:95ms">
+    <div class="lbl" style="margin-bottom:10px">ความถี่ตามช่วงเวลา (Golden Hour) ⏰</div>
+    <div style="display:grid;grid-template-columns:repeat(12,1fr);gap:3px;margin-bottom:8px">
+      ${Array.from({length:24},(_,i)=>{
+        const isG=i===d.b.gh, near=Math.abs(i-d.b.gh)<=2;
+        const h=isG?1:near?.55:.1+Math.random()*.3;
+        return `<div title="${String(i).padStart(2,"0")}:00" style="aspect-ratio:1;border-radius:4px;cursor:default;background:${isG?col:`rgba(100,120,220,${.06+h*.5})`};box-shadow:${isG?`0 0 8px ${col}66`:"none"};border:${isG?`1px solid ${col}55`:"1px solid transparent"};transition:transform .15s" onmouseover="this.style.transform='scale(1.5)'" onmouseout="this.style.transform='scale(1)'"></div>`;
+      }).join("")}
+    </div>
+    <div style="font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px;font-family:'Sarabun',sans-serif">
+      <span style="width:10px;height:10px;border-radius:2px;background:${col};display:inline-block"></span>
+      Golden Hour: <strong style="color:${col}">${String(d.b.gh).padStart(2,"0")}:00 น.</strong>
+    </div>
+  </div>`;
+}
+
+/* ── PAGE: TIP ────────────────────────────────────── */
+function buildTip(d,col,bg){
+  const p=$("page-tip"); p.innerHTML="";
+  const tg=d.g.find(g=>g.n);
+
+  p.innerHTML=`
+  <div class="card fu" style="background:linear-gradient(135deg,#1a0022,#220030);border-color:var(--pk)30;animation-delay:0ms">
+    <div style="display:flex;gap:14px;align-items:center">
+      <div class="float" style="font-size:46px;filter:drop-shadow(0 0 14px var(--pk)77);flex-shrink:0">⭐</div>
+      <div>
+        <div class="lbl" style="color:var(--pk2)aa">Golden Hour ของคุณ</div>
+        <div style="font-size:36px;font-weight:900;color:var(--pk2);line-height:1">${d.b.gh}:00 <span style="font-size:15px;color:var(--muted2);font-weight:400">น.</span></div>
+        <div style="font-size:13px;color:var(--muted2);margin-top:5px;line-height:1.6;font-family:'Sarabun',sans-serif">ช่วงเวลาที่คุณเล่นได้ดีที่สุด เล่นตอนนี้เลย!</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card fu" style="background:linear-gradient(135deg,#0e1a1a,#0f2020);border-color:#2dd4bf28;animation-delay:50ms">
+    <div style="display:flex;gap:14px;align-items:center">
+      <div class="float" style="font-size:40px;animation-duration:3.8s;flex-shrink:0">⏱️</div>
+      <div>
+        <div class="lbl" style="color:#2dd4bfaa">Session ที่แนะนำ</div>
+        <div style="font-size:28px;font-weight:900;color:#2dd4bf;line-height:1">${d.b.rs}</div>
+        <div style="font-size:13px;color:#557788;margin-top:5px;line-height:1.6;font-family:'Sarabun',sans-serif">เล่นในระยะที่เหมาะสมช่วยรักษา win rate ได้ดี</div>
+      </div>
+    </div>
+  </div>
+
+  ${tg?`
+  <div class="card fu" style="animation-delay:95ms">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:13px">
+      <div style="font-size:30px">${tg.t==="SLOT"?"🎰":"🃏"}</div>
+      <div>
+        <div class="lbl">เกมที่คุณถนัดที่สุด</div>
+        <div style="font-size:16px;font-weight:800;color:${col}">${tg.n}</div>
+        <div style="font-size:11px;color:var(--muted2);margin-top:1px;font-family:'Sarabun',sans-serif">${tg.p} · <span style="color:${tcol(tg.t)}">${tg.t}</span></div>
+      </div>
+    </div>
+    <div style="background:#ffffff05;border-radius:12px;padding:11px 13px;border:1px solid var(--border);font-size:13px;color:var(--muted2);line-height:1.7;font-family:'Sarabun',sans-serif">
+      เล่น <span style="color:${col};font-weight:700">${tg.n}</span> ช่วง <span style="color:var(--pk2);font-weight:700">${d.b.gh}:00 น.</span> เพื่อผลลัพธ์ที่ดีที่สุด!
+    </div>
+  </div>`:""}
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    ${[
+      {i:"🔥",l:"Win Streak (LIVE)",v:`${d.s.sk} ครั้ง`,c:"var(--pk2)"},
+      {i:"⚡",l:"Win Rate",         v:`${d.s.wr}%`,      c:d.s.wr>=44?"#34d399":"var(--pu2)"},
+      {i:"📅",l:"Active Days",      v:`${d.b.ad}/30`,    c:bg.c},
+      {i:"🎮",l:"Sessions",         v:`${d.s.ts} รอบ`,   c:"#7ec8e3"},
+    ].map((s,i)=>`
+    <div class="card fu" style="padding:13px;animation-delay:${120+i*30}ms">
+      <div style="font-size:20px;margin-bottom:5px">${s.i}</div>
+      <div class="lbl" style="margin:0 0 3px">${s.l}</div>
+      <div style="font-size:19px;font-weight:900;color:${s.c}">${s.v}</div>
+    </div>`).join("")}
+  </div>`;
+}
+</script>
+</body>
+</html>
